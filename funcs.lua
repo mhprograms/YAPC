@@ -12,11 +12,20 @@ function pong.detectCollisionBetweenBallandPlayer1()
 		closestPointToBallOnPlayer1yPosition = player1.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer1xPosition - ball.x)^2 + (closestPointToBallOnPlayer1yPosition - ball.y)^2) <= ball.radius then
-		local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
-		local newBallAngle = 0 - (normalisedHitPosition * 45)
-		ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-		ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-		ball.x = player1.x + paddle.width + ball.radius
+		local paddleMiddlexPosition = player1.x + (paddle.width / 2)
+		if closestPointToBallOnPlayer1xPosition < paddleMiddlexPosition then
+			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
+			local newBallAngle = 180 + (normalisedHitPosition * 45)
+			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
+			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
+			ball.x = player1.x - ball.radius		
+		else
+			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
+			local newBallAngle = 0 - (normalisedHitPosition * 45)
+			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
+			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
+			ball.x = player1.x + paddle.width + ball.radius
+		end	
 	end		
 end
 function pong.detectCollisionBetweenBallandPlayer2()
@@ -32,11 +41,20 @@ function pong.detectCollisionBetweenBallandPlayer2()
 		closestPointToBallOnPlayer2yPosition = player2.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer2xPosition - ball.x)^2 + (closestPointToBallOnPlayer2yPosition - ball.y)^2) <= ball.radius then
-		local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
-		local newBallAngle = 180 + (normalisedHitPosition * 45)
-		ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-		ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-		ball.x = player2.x - ball.radius
+		local paddleMiddlexPosition = player2.x + (paddle.width / 2)
+		if closestPointToBallOnPlayer2xPosition > paddleMiddlexPosition then
+			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
+			local newBallAngle = 0 - (normalisedHitPosition * 45)
+			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
+			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
+			ball.x = player2.x + paddle.width + ball.radius	
+		else
+			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
+			local newBallAngle = 180 + (normalisedHitPosition * 45)
+			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
+			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
+			ball.x = player2.x - ball.radius
+		end
 	end
 end
 function pong.moveThePaddlesAndKeepThemOnScreen(deltaTime)

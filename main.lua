@@ -38,5 +38,5 @@ function love.draw()
 	love.graphics.setColor(1, 1, 1)
 	love.graphics.rectangle("fill", player1.x, player1.y, paddle.width, paddle.height)
 	love.graphics.rectangle("fill", player2.x, player2.y, paddle.width, paddle.height)
-	love.graphics.circle("fill", ball.x, ball.y, ball.radius )
+	love.graphics.circle("fill", ball.x, ball.y, ball.radius)
 end

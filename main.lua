@@ -35,8 +35,12 @@ function love.update(dt)
 	pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()	
 end
 function love.draw()
+	for i = 0, 600, 30 do
+		love.graphics.rectangle("fill", 392.5, i, 15, 15)
+	end
 	love.graphics.setColor(1, 1, 1)
 	love.graphics.rectangle("fill", player1.x, player1.y, paddle.width, paddle.height)
 	love.graphics.rectangle("fill", player2.x, player2.y, paddle.width, paddle.height)
 	love.graphics.circle("fill", ball.x, ball.y, ball.radius)
+	love.graphics.setColor(0.22, 1.0, 0.08)
 end

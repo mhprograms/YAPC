@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.3
+	* update: green dashed center line
 * 0.2
 	* fix: ball glitching and teleporting on paddle corner hits
 * 0.1

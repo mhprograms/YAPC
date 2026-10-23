@@ -1,11 +1,11 @@
 # YAPC: Yet Another Pong Clone
 
-This is a barebones clone of Atari Pong.
+This is a ~~barebones~~(v0.1 - v0.4) clone of Atari Pong.
 
 ## Description
 
-This is a clone of the original Atari Pong game; however, it's barebones.
-This is basically just a physics simulation.
+This is a clone of the original Atari Pong game ~~; however, it's barebones.~~
+~~This is basically just a physics simulation.~~(v0.1 - v0.4)
 
 ## Getting Started
 

@@ -95,24 +95,29 @@ function pong.bounceBallWhentheTopOrBottomWallisHit()
 	end
 end
 function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
-	local ballOffScreen, whichPlayerGetsTheBall
+	local whichPlayerGetsTheBall
 	if ball.x - ball.radius < 0 then
-		ballOffScreen = true
+		player2.score = player2.score + 1
 		whichPlayerGetsTheBall = 1
 	elseif ball.x + ball.radius > window.width then
-		ballOffScreen = true
+		player1.score = player1.score + 1
 		whichPlayerGetsTheBall = 2
 	end
 	if whichPlayerGetsTheBall == 1 then
-		local newBallAngle = math.random(135, 225)
+		local newBallAngle = love.math.random(135, 225)
 		ball.x, ball.y = window.width / 2, window.height / 2
 		ball.velx = 250 * math.cos(math.rad(newBallAngle))
 		ball.vely = 250 * math.sin(math.rad(newBallAngle))
 	elseif whichPlayerGetsTheBall == 2 then
-		local newBallAngle = math.random(-45, 45)
+		local newBallAngle = love.math.random(-45, 45)
 		ball.x, ball.y = window.width / 2, window.height / 2
 		ball.velx = 250 * math.cos(math.rad(newBallAngle))
 		ball.vely = 250 * math.sin(math.rad(newBallAngle))			
 	end
+end
+function pong.checkIfGameWon()
+	if player1.score >= 11 or player2.score >= 11 then
+		gameState = "won"
+	end 
 end
 return pong

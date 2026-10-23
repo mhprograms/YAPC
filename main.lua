@@ -11,10 +11,12 @@ function love.load()
 	player1 = {
 		x = 20,
 		y = 240,
+		score = 0,
 	}
 	player2 = {
 		x = 760,
 		y = 240,
+		score = 0,
 	}
 	ball = {
 		x = window.width / 2,
@@ -24,16 +26,20 @@ function love.load()
 		vely = 250 * math.sin(math.rad(0)),
 	}
 	love.window.setMode(window.width, window.height)
-	gameState = "playing"		
+	gameState = "playing"
+	pong = require("funcs")
+	love.graphics.setFont(love.graphics.newFont("assets/PressStart2P-Regular.ttf"))				
 end
-local pong = require("funcs")
 function love.update(dt)
-	pong.detectCollisionBetweenBallandPlayer1()
-	pong.detectCollisionBetweenBallandPlayer2()
-	pong.moveThePaddlesAndKeepThemOnScreen(dt)
-	pong.moveTheBall(dt)
-	pong.bounceBallWhentheTopOrBottomWallisHit()
-	pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()	
+	if gameState == "playing" then
+		pong.detectCollisionBetweenBallandPlayer1()
+		pong.detectCollisionBetweenBallandPlayer2()
+		pong.moveThePaddlesAndKeepThemOnScreen(dt)
+		pong.moveTheBall(dt)
+		pong.bounceBallWhentheTopOrBottomWallisHit()
+		pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
+		pong.checkIfGameWon()
+	end	
 end
 function love.draw()
 	for i = 0, 600, 30 do
@@ -44,4 +50,7 @@ function love.draw()
 	love.graphics.rectangle("fill", player2.x, player2.y, paddle.width, paddle.height)
 	love.graphics.circle("fill", ball.x, ball.y, ball.radius)
 	love.graphics.setColor(0.22, 1.0, 0.08)
+	local scoreyPosition = 50
+	love.graphics.printf(player1.score, 0, scoreyPosition, 400, "center")
+	love.graphics.printf(player2.score, 400, scoreyPosition, 400, "center")
 end

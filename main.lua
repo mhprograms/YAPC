@@ -10,11 +10,11 @@ function love.load()
 	}
 	player1 = {
 		x = 20,
-		y = 250,
+		y = 240,
 	}
 	player2 = {
 		x = 760,
-		y = 250,
+		y = 240,
 	}
 	ball = {
 		x = window.width / 2,
@@ -23,7 +23,8 @@ function love.load()
 		velx = 250 * math.cos(math.rad(0)),
 		vely = 250 * math.sin(math.rad(0)),
 	}
-	love.window.setMode(window.width, window.height)		
+	love.window.setMode(window.width, window.height)
+	gameState = "playing"		
 end
 local pong = require("funcs")
 function love.update(dt)

@@ -98,10 +98,10 @@ function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 	local ballOffScreen, whichPlayerGetsTheBall
 	if ball.x - ball.radius < 0 then
 		ballOffScreen = true
-		whichPlayerGetsTheBall = 2
+		whichPlayerGetsTheBall = 1
 	elseif ball.x + ball.radius > window.width then
 		ballOffScreen = true
-		whichPlayerGetsTheBall = 1
+		whichPlayerGetsTheBall = 2
 	end
 	if whichPlayerGetsTheBall == 1 then
 		local newBallAngle = math.random(135, 225)

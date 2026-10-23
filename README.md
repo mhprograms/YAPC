@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.4
+	* fix: paddles lowered, no chance of an infinite loop where ball stays straight, and losing player gets to serve the next ball.
 * 0.3
 	* update: green dashed center line
 * 0.2

@@ -120,4 +120,9 @@ function pong.checkIfGameWon()
 		gameState = "won"
 	end 
 end
+function pong.detectCrash()
+	if love.keyboard.isDown("lctrl") and love.keyboard.isDown("lalt") and love.keyboard.isDown("lshift") and love.keyboard.isDown("c") then
+		neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou = neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou + 1
+	end
+end
 return pong

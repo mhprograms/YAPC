@@ -39,6 +39,7 @@ function love.update(dt)
 		pong.bounceBallWhentheTopOrBottomWallisHit()
 		pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 		pong.checkIfGameWon()
+		pong.detectCrash()
 	end	
 end
 function love.draw()

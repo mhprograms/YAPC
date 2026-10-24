@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.6
+	* feat: easter egg, key combination that crashes the game
 * 0.5
 	* feat: score system
 * 0.4

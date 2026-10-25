@@ -101,9 +101,11 @@ end
 function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 	local whichPlayerGetsTheBall
 	if ball.x - ball.radius < 0 then
+		love.audio.play(sound3)
 		player2.score = player2.score + 1
 		whichPlayerGetsTheBall = 1
 	elseif ball.x + ball.radius > window.width then
+		love.audio.play(sound3)
 		player1.score = player1.score + 1
 		whichPlayerGetsTheBall = 2
 	end
@@ -121,7 +123,6 @@ function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 end
 function pong.checkIfGameWon()
 	if player1.score >= 11 or player2.score >= 11 then
-		love.audio.play(sound3)
 		gameState = "won"
 	end 
 end

@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.7
+	* feat: sound effects
 * 0.6
 	* feat: easter egg, key combination that crashes the game
 * 0.5

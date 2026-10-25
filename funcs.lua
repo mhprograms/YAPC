@@ -12,6 +12,7 @@ function pong.detectCollisionBetweenBallandPlayer1()
 		closestPointToBallOnPlayer1yPosition = player1.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer1xPosition - ball.x)^2 + (closestPointToBallOnPlayer1yPosition - ball.y)^2) <= ball.radius then
+		love.audio.play(sound1)
 		local paddleMiddlexPosition = player1.x + (paddle.width / 2)
 		if closestPointToBallOnPlayer1xPosition < paddleMiddlexPosition then
 			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
@@ -41,6 +42,7 @@ function pong.detectCollisionBetweenBallandPlayer2()
 		closestPointToBallOnPlayer2yPosition = player2.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer2xPosition - ball.x)^2 + (closestPointToBallOnPlayer2yPosition - ball.y)^2) <= ball.radius then
+		love.audio.play(sound1)
 		local paddleMiddlexPosition = player2.x + (paddle.width / 2)
 		if closestPointToBallOnPlayer2xPosition > paddleMiddlexPosition then
 			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
@@ -87,9 +89,11 @@ function pong.moveTheBall(deltaTime)
 end
 function pong.bounceBallWhentheTopOrBottomWallisHit()
 	if ball.y - ball.radius < 0 then
+		love.audio.play(sound2)
 		ball.y = 0 + ball.radius
 		ball.vely = -ball.vely
 	elseif ball.y + ball.radius > window.height then
+		love.audio.play(sound2)
 		ball.y = window.height - ball.radius
 		ball.vely = -ball.vely
 	end
@@ -117,6 +121,7 @@ function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 end
 function pong.checkIfGameWon()
 	if player1.score >= 11 or player2.score >= 11 then
+		love.audio.play(sound3)
 		gameState = "won"
 	end 
 end

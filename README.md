@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.8
+	* feat: start menu
 * 0.7
 	* feat: sound effects
 * 0.6

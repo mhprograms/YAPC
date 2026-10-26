@@ -25,8 +25,15 @@ function love.load()
 		velx = 250 * math.cos(math.rad(0)),
 		vely = 250 * math.sin(math.rad(0)),
 	}
+	button = {
+		x = 225,
+		y1 = 230,
+		y2 = 310,
+		width = 350,
+		height = 60,
+	}
 	love.window.setMode(window.width, window.height)
-	gameState = "playing"
+	gameState = "menu"
 	love.graphics.setFont(love.graphics.newFont("assets/PressStart2P-Regular.ttf"))
 	scoreyPosition = 50
 	wyPosition = 100
@@ -39,6 +46,7 @@ function love.load()
 end
 function love.update(dt)
 	pong.detectCrash()
+	pong.detectIfMenu()
 	if gameState == "playing" then
 		pong.detectCollisionBetweenBallandPlayer1()
 		pong.detectCollisionBetweenBallandPlayer2()
@@ -48,20 +56,25 @@ function love.update(dt)
 		pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 		pong.checkIfGameWon()
 	end
+	if gameState == "menu" then
+		pong.listenToKeyboard()
+	end
 end
 function love.draw()
-	love.graphics.setColor(0.22, 1.0, 0.08)
-	for i = 0, 600, 30 do
-		love.graphics.rectangle("fill", 392.5, i, 15, 15)
+	if gameState == "playing" or gameState == "won" then
+		love.graphics.setColor(0.22, 1.0, 0.08)
+		for i = 0, 600, 30 do
+			love.graphics.rectangle("fill", 392.5, i, 15, 15)
+		end
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("fill", player1.x, player1.y, paddle.width, paddle.height)
+		love.graphics.rectangle("fill", player2.x, player2.y, paddle.width, paddle.height)
+		love.graphics.circle("fill", ball.x, ball.y, ball.radius)
+		love.graphics.setColor(0.22, 1.0, 0.08)
+		love.graphics.printf(player1.score, 0, scoreyPosition, 400, "center")
+		love.graphics.printf(player2.score, 400, scoreyPosition, 400, "center")
+		love.graphics.setColor(1, 1, 1)
 	end
-	love.graphics.setColor(1, 1, 1)
-	love.graphics.rectangle("fill", player1.x, player1.y, paddle.width, paddle.height)
-	love.graphics.rectangle("fill", player2.x, player2.y, paddle.width, paddle.height)
-	love.graphics.circle("fill", ball.x, ball.y, ball.radius)
-	love.graphics.setColor(0.22, 1.0, 0.08)
-	love.graphics.printf(player1.score, 0, scoreyPosition, 400, "center")
-	love.graphics.printf(player2.score, 400, scoreyPosition, 400, "center")
-	love.graphics.setColor(1, 1, 1)
 	if gameState == "won" then
 		if player1.score == 11 then
 			love.graphics.printf("W", 0, wyPosition, 400, "center")
@@ -72,5 +85,17 @@ function love.draw()
 			love.graphics.printf("I", 400, iyPosition, 400, "center")
 			love.graphics.printf("N", 400, nyPosition, 400, "center")
 		end
+	end
+	if gameState == "menu" then
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", button.x, button.y1, button.width, button.height)
+		love.graphics.rectangle("line", button.x, button.y2, button.width, button.height)
+		love.graphics.printf("PLAY(p)", button.x, button.y1 + button.height / 2 - 6, button.width, "center")
+		love.graphics.printf("CONTROLS(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")
+	end
+	if gameState == "controlmenu" then
+		love.graphics.print("W/S to move the left paddle", 5, 5)
+		love.graphics.print("Up/Down arrow to move the right paddle", 5, 22)
+		love.graphics.print("ESCAPE to go back to the menu", 5, 39)
 	end
 end

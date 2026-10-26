@@ -131,4 +131,37 @@ function pong.detectCrash()
 		neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou = neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou + 1
 	end
 end
+function pong.listenToKeyboard()
+	if love.keyboard.isDown("p") then
+		gameState = "playing"
+	end
+	if love.keyboard.isDown("c") then
+		gameState = "controlmenu"
+	end
+end
+function pong.detectIfMenu()
+	if love.keyboard.isDown("escape") then
+		gameState = "menu"
+		reset()
+	end
+end
+function reset()
+	player1 = {
+		x = 20,
+		y = 240,
+		score = 0,
+	}
+	player2 = {
+		x = 760,
+		y = 240,
+		score = 0,
+	}
+	ball = {
+		x = window.width / 2,
+		y = window.height / 2,
+		radius = 10,
+		velx = 250 * math.cos(math.rad(0)),
+		vely = 250 * math.sin(math.rad(0)),
+	}
+end
 return pong

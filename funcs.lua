@@ -12,7 +12,9 @@ function pong.detectCollisionBetweenBallandPlayer1()
 		closestPointToBallOnPlayer1yPosition = player1.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer1xPosition - ball.x)^2 + (closestPointToBallOnPlayer1yPosition - ball.y)^2) <= ball.radius then
-		love.audio.play(sound1)
+		if soundState == "on" then
+			love.audio.play(sound1)
+		end
 		local paddleMiddlexPosition = player1.x + (paddle.width / 2)
 		if closestPointToBallOnPlayer1xPosition < paddleMiddlexPosition then
 			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
@@ -42,7 +44,9 @@ function pong.detectCollisionBetweenBallandPlayer2()
 		closestPointToBallOnPlayer2yPosition = player2.y + paddle.height
 	end
 	if math.sqrt((closestPointToBallOnPlayer2xPosition - ball.x)^2 + (closestPointToBallOnPlayer2yPosition - ball.y)^2) <= ball.radius then
-		love.audio.play(sound1)
+		if soundState == "on" then
+			love.audio.play(sound1)
+		end
 		local paddleMiddlexPosition = player2.x + (paddle.width / 2)
 		if closestPointToBallOnPlayer2xPosition > paddleMiddlexPosition then
 			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
@@ -59,7 +63,7 @@ function pong.detectCollisionBetweenBallandPlayer2()
 		end
 	end
 end
-function pong.moveThePaddlesAndKeepThemOnScreen(deltaTime)
+function pong.moveThePaddles(deltaTime)
 	if love.keyboard.isDown("w") then
 		player1.y = player1.y - paddle.speed * deltaTime
 	end
@@ -71,11 +75,20 @@ function pong.moveThePaddlesAndKeepThemOnScreen(deltaTime)
 	elseif player1.y < 0 then
 		player1.y = 0
 	end
-	if love.keyboard.isDown("up") then
+	if love.keyboard.isDown("up") and gameState == "2player" then
 		player2.y = player2.y - paddle.speed * deltaTime
 	end
-	if love.keyboard.isDown("down") then
+	if love.keyboard.isDown("down") and gameState == "2player" then
 		player2.y = player2.y + paddle.speed * deltaTime
+	end
+	local player2CentreyPosition = player2.y + paddle.height / 2 
+	if gameState == "cpu" then
+		if ball.y < player2CentreyPosition - paddle.height / 2 then
+			player2.y = player2.y - paddle.speed * 0.5 * deltaTime
+		end
+		if ball.y > player2CentreyPosition + paddle.height / 2 then
+			player2.y = player2.y + paddle.speed * 0.5 * deltaTime			
+		end
 	end
 	if player2.y > 500 then
 		player2.y = 500
@@ -89,11 +102,15 @@ function pong.moveTheBall(deltaTime)
 end
 function pong.bounceBallWhentheTopOrBottomWallisHit()
 	if ball.y - ball.radius < 0 then
-		love.audio.play(sound2)
+		if soundState == "on" then
+			love.audio.play(sound2)
+		end
 		ball.y = 0 + ball.radius
 		ball.vely = -ball.vely
 	elseif ball.y + ball.radius > window.height then
-		love.audio.play(sound2)
+		if soundState == "on" then
+			love.audio.play(sound2)
+		end
 		ball.y = window.height - ball.radius
 		ball.vely = -ball.vely
 	end
@@ -101,11 +118,15 @@ end
 function pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 	local whichPlayerGetsTheBall
 	if ball.x - ball.radius < 0 then
-		love.audio.play(sound3)
+		if soundState == "on" then
+			love.audio.play(sound3)
+		end
 		player2.score = player2.score + 1
 		whichPlayerGetsTheBall = 1
 	elseif ball.x + ball.radius > window.width then
-		love.audio.play(sound3)
+		if soundState == "on" then
+			love.audio.play(sound3)
+		end
 		player1.score = player1.score + 1
 		whichPlayerGetsTheBall = 2
 	end
@@ -131,12 +152,19 @@ function pong.detectCrash()
 		neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou = neverGonnaGiveYouUpNeverGonnaLetYouDownNeverGonnaRunAroundAndDesertYouNeverGonnaMakeYouCryNeverGonnaSayGoodbyeNeverGonnaTellALieAndHurtYou + 1
 	end
 end
-function pong.listenToKeyboard()
-	if love.keyboard.isDown("p") then
-		gameState = "playing"
-	end
-	if love.keyboard.isDown("c") then
-		gameState = "controlmenu"
+function pong.listenToKeyboard(key)
+	if key == "p" and gameState == "menu" then
+		gameState = "optionsMenu"
+	elseif key == "p" and gameState == "optionsMenu" then
+		gameState = "2player"
+	elseif key == "c" and gameState == "menu" then
+		gameState = "controlMenu"
+	elseif key == "c" and gameState == "optionsMenu" then
+		gameState = "cpu"
+	elseif key == "d" and soundState == "on" then
+		soundState = "off"
+	elseif key == "d" and soundState == "off" then
+		soundState = "on"
 	end
 end
 function pong.detectIfMenu()

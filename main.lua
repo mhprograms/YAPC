@@ -27,13 +27,14 @@ function love.load()
 	}
 	button = {
 		x = 225,
-		y1 = 230,
-		y2 = 310,
+		y1 = 250,
+		y2 = 340,
 		width = 350,
 		height = 60,
 	}
 	love.window.setMode(window.width, window.height)
 	gameState = "menu"
+	soundState = "on"
 	love.graphics.setFont(love.graphics.newFont("assets/PressStart2P-Regular.ttf"))
 	scoreyPosition = 50
 	wyPosition = 100
@@ -47,21 +48,21 @@ end
 function love.update(dt)
 	pong.detectCrash()
 	pong.detectIfMenu()
-	if gameState == "playing" then
+	if gameState == "2player" or gameState == "cpu" then
 		pong.detectCollisionBetweenBallandPlayer1()
 		pong.detectCollisionBetweenBallandPlayer2()
-		pong.moveThePaddlesAndKeepThemOnScreen(dt)
+		pong.moveThePaddles(dt)
 		pong.moveTheBall(dt)
 		pong.bounceBallWhentheTopOrBottomWallisHit()
 		pong.dealWithTheBallWhenItHitsTheLeftOrRightWall()
 		pong.checkIfGameWon()
 	end
-	if gameState == "menu" then
-		pong.listenToKeyboard()
-	end
+end
+function love.keypressed(key)
+	pong.listenToKeyboard(key)
 end
 function love.draw()
-	if gameState == "playing" or gameState == "won" then
+	if gameState == "2player" or gameState == "cpu" or gameState == "won" then
 		love.graphics.setColor(0.22, 1.0, 0.08)
 		for i = 0, 600, 30 do
 			love.graphics.rectangle("fill", 392.5, i, 15, 15)
@@ -93,9 +94,17 @@ function love.draw()
 		love.graphics.printf("PLAY(p)", button.x, button.y1 + button.height / 2 - 6, button.width, "center")
 		love.graphics.printf("CONTROLS(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")
 	end
-	if gameState == "controlmenu" then
-		love.graphics.print("W/S to move the left paddle", 5, 5)
-		love.graphics.print("Up/Down arrow to move the right paddle", 5, 22)
-		love.graphics.print("ESCAPE to go back to the menu", 5, 39)
+	if gameState == "controlMenu" then
+		love.graphics.print("W/S to move the left paddle or to play when you're playing with the CPU.", 5, 5)
+		love.graphics.print("Up/Down arrow to move the right paddle.", 5, 22)
+		love.graphics.print("ESCAPE to go back to the menu.", 5, 39)
+		love.graphics.print("D to toggle sound.", 5, 56)
+	end
+	if gameState == "optionsMenu" then
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", button.x, button.y1, button.width, button.height)
+		love.graphics.rectangle("line", button.x, button.y2, button.width, button.height)
+		love.graphics.printf("2 PLAYER(p)", button.x, button.y1 + button.height / 2 - 6, button.width, "center")
+		love.graphics.printf("CPU(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")	
 	end
 end

@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 0.9.1
+	* refactor: replaced repeated number with variable
 * 0.9
 	* feat: game AI
 * 0.8

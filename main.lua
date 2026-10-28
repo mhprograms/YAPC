@@ -95,10 +95,11 @@ function love.draw()
 		love.graphics.printf("CONTROLS(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")
 	end
 	if gameState == "controlMenu" then
-		love.graphics.print("W/S to move the left paddle or to play when you're playing with the CPU.", 5, 5)
-		love.graphics.print("Up/Down arrow to move the right paddle.", 5, 22)
-		love.graphics.print("ESCAPE to go back to the menu.", 5, 39)
-		love.graphics.print("D to toggle sound.", 5, 56)
+		love.graphics.print("W/S to move the left paddle or to play when you're playing with", 5, 5)
+		love.graphics.print("the CPU.", 5, 22)
+		love.graphics.print("UP/DOWN arrows to move the right paddle.", 5, 39)
+		love.graphics.print("ESCAPE to go back to the menu.", 5, 56)
+		love.graphics.print("D to toggle sound on/off.", 5, 73)
 	end
 	if gameState == "optionsMenu" then
 		love.graphics.setColor(1, 1, 1)

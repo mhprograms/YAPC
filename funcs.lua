@@ -81,13 +81,14 @@ function pong.moveThePaddles(deltaTime)
 	if love.keyboard.isDown("down") and gameState == "2player" then
 		player2.y = player2.y + paddle.speed * deltaTime
 	end
-	local player2CentreyPosition = player2.y + paddle.height / 2 
+	local player2CentreyPosition = player2.y + paddle.height / 2
+	local CPUspeedmultiplier = 0.5
 	if gameState == "cpu" then
 		if ball.y < player2CentreyPosition - paddle.height / 2 then
-			player2.y = player2.y - paddle.speed * 0.5 * deltaTime
+			player2.y = player2.y - paddle.speed * CPUspeedmultiplier * deltaTime
 		end
 		if ball.y > player2CentreyPosition + paddle.height / 2 then
-			player2.y = player2.y + paddle.speed * 0.5 * deltaTime			
+			player2.y = player2.y + paddle.speed * CPUspeedmultiplier * deltaTime			
 		end
 	end
 	if player2.y > 500 then

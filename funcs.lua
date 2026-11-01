@@ -19,15 +19,36 @@ function pong.detectCollisionBetweenBallandPlayer1()
 		if closestPointToBallOnPlayer1xPosition < paddleMiddlexPosition then
 			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
 			local newBallAngle = 180 + (normalisedHitPosition * 45)
-			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-			ball.x = player1.x - ball.radius		
+			if difficulty == "hard" then
+				newBallAngle = 180 + (normalisedHitPosition * 60)
+			end
+			if difficulty == "easy" then
+				ball.velx = ball.easySpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.easySpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "medium" then
+				ball.velx = ball.mediumSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.mediumSpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "hard" then
+				ball.velx = ball.hardSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.hardSpeed * math.sin(math.rad(newBallAngle))
+			end
+			ball.x = player1.x - ball.radius	
 		else
 			local normalisedHitPosition = ((player1.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
 			local newBallAngle = 0 - (normalisedHitPosition * 45)
-			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-			ball.x = player1.x + paddle.width + ball.radius
+			if difficulty == "hard" then
+				newBallAngle = 0 - (normalisedHitPosition * 60)
+			end
+			if difficulty == "easy" then
+				ball.velx = ball.easySpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.easySpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "medium" then
+				ball.velx = ball.mediumSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.mediumSpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "hard" then
+				ball.velx = ball.hardSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.hardSpeed * math.sin(math.rad(newBallAngle))
+			end
 		end	
 	end		
 end
@@ -51,15 +72,36 @@ function pong.detectCollisionBetweenBallandPlayer2()
 		if closestPointToBallOnPlayer2xPosition > paddleMiddlexPosition then
 			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
 			local newBallAngle = 0 - (normalisedHitPosition * 45)
-			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-			ball.x = player2.x + paddle.width + ball.radius	
+			if difficulty == "hard" then
+				newBallAngle = 0 - (normalisedHitPosition * 60)
+			end
+			if difficulty == "easy" then
+				ball.velx = ball.easySpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.easySpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "medium" then
+				ball.velx = ball.mediumSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.mediumSpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "hard" then
+				ball.velx = ball.hardSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.hardSpeed * math.sin(math.rad(newBallAngle))	
+			end
+			ball.x = player2.x + paddle.width + ball.radius
 		else
 			local normalisedHitPosition = ((player2.y + (paddle.height / 2)) - ball.y) / (paddle.height / 2)
 			local newBallAngle = 180 + (normalisedHitPosition * 45)
-			ball.velx = paddle.speed * math.cos(math.rad(newBallAngle))
-			ball.vely = paddle.speed * math.sin(math.rad(newBallAngle))
-			ball.x = player2.x - ball.radius
+			if difficulty == "hard" then
+				newBallAngle = 180 + (normalisedHitPosition * 60)
+			end
+			if difficulty == "easy" then
+				ball.velx = ball.easySpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.easySpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "medium" then
+				ball.velx = ball.mediumSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.mediumSpeed * math.sin(math.rad(newBallAngle))
+			elseif difficulty == "hard" then
+				ball.velx = ball.hardSpeed * math.cos(math.rad(newBallAngle))
+				ball.vely = ball.hardSpeed * math.sin(math.rad(newBallAngle))
+			end
 		end
 	end
 end
@@ -82,13 +124,24 @@ function pong.moveThePaddles(deltaTime)
 		player2.y = player2.y + paddle.speed * deltaTime
 	end
 	local player2CentreyPosition = player2.y + paddle.height / 2
-	local CPUspeedmultiplier = 0.5
 	if gameState == "cpu" then
 		if ball.y < player2CentreyPosition - paddle.height / 2 then
-			player2.y = player2.y - paddle.speed * CPUspeedmultiplier * deltaTime
+			if difficulty == "easy" then 
+				player2.y = player2.y - paddle.speed * player2.aiEasySpeedMultiplier * deltaTime
+			elseif difficulty == "medium" then
+				player2.y = player2.y - paddle.speed * player2.aiMediumSpeedMultiplier * deltaTime
+			elseif difficulty == "hard" then
+				player2.y = player2.y - paddle.speed * player2.aiHardSpeedMultiplier * deltaTime
+			end
 		end
 		if ball.y > player2CentreyPosition + paddle.height / 2 then
-			player2.y = player2.y + paddle.speed * CPUspeedmultiplier * deltaTime			
+			if difficulty == "easy" then
+				player2.y = player2.y + paddle.speed * player2.aiEasySpeedMultiplier * deltaTime
+			elseif difficulty == "medium" then
+				player2.y = player2.y + paddle.speed * player2.aiMediumSpeedMultiplier * deltaTime
+			elseif difficulty == "hard" then
+				player2.y = player2.y + paddle.speed * player2.aiHardSpeedMultiplier * deltaTime
+			end
 		end
 	end
 	if player2.y > 500 then
@@ -157,19 +210,34 @@ function pong.listenToKeyboard(key)
 	if key == "p" and gameState == "menu" then
 		gameState = "optionsMenu"
 	elseif key == "p" and gameState == "optionsMenu" then
-		gameState = "2player"
+		gameState = "2playerDifficultyMenu"
 	elseif key == "c" and gameState == "menu" then
 		gameState = "controlMenu"
 	elseif key == "c" and gameState == "optionsMenu" then
-		gameState = "cpu"
-	elseif key == "d" and soundState == "on" then
+		gameState = "cpuDifficultyMenu"
+	elseif key == "d" and soundState == "on" and (gameState == "2player" or gameState == "cpu") then
 		soundState = "off"
-	elseif key == "d" and soundState == "off" then
+	elseif key == "d" and soundState == "off" and (gameState == "2player" or gameState == "cpu") then
 		soundState = "on"
-	end
-end
-function pong.detectIfMenu()
-	if love.keyboard.isDown("escape") then
+	elseif key == "e" and gameState == "2playerDifficultyMenu" then
+		difficulty = "easy"
+		gameState = "2player"
+	elseif key == "m" and gameState == "2playerDifficultyMenu" then
+		difficulty = "medium"
+		gameState = "2player"
+	elseif key == "h" and gameState == "2playerDifficultyMenu" then
+		difficulty = "hard"
+		gameState = "2player"
+	elseif key == "e" and gameState == "cpuDifficultyMenu" then
+		difficulty = "easy"
+		gameState = "cpu"
+	elseif key == "m" and gameState == "cpuDifficultyMenu" then
+		difficulty = "medium"
+		gameState = "cpu"
+	elseif key == "h" and gameState == "cpuDifficultyMenu" then
+		difficulty = "hard"
+		gameState = "cpu"	
+	elseif love.keyboard.isDown("escape") then
 		gameState = "menu"
 		reset()
 	end
@@ -184,11 +252,17 @@ function reset()
 		x = 760,
 		y = 240,
 		score = 0,
+		aiEasySpeedMultiplier = 0.5,
+		aiMediumSpeedMultiplier = 0.8,
+		aiHardSpeedMultiplier = 0.9,
 	}
 	ball = {
 		x = window.width / 2,
 		y = window.height / 2,
 		radius = 10,
+		easySpeed = 500,
+		mediumSpeed = 600,
+		hardSpeed = 700,
 		velx = 250 * math.cos(math.rad(0)),
 		vely = 250 * math.sin(math.rad(0)),
 	}

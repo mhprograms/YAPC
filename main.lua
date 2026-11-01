@@ -17,18 +17,32 @@ function love.load()
 		x = 760,
 		y = 240,
 		score = 0,
+		aiEasySpeedMultiplier = 0.5,
+		aiMediumSpeedMultiplier = 0.8,
+		aiHardSpeedMultiplier = 0.9,
 	}
 	ball = {
 		x = window.width / 2,
 		y = window.height / 2,
 		radius = 10,
+		easySpeed = 500,
+		mediumSpeed = 600,
+		hardSpeed = 700,
 		velx = 250 * math.cos(math.rad(0)),
 		vely = 250 * math.sin(math.rad(0)),
 	}
-	button = {
+	buttonSet1 = {
 		x = 225,
 		y1 = 250,
 		y2 = 340,
+		width = 350,
+		height = 60,
+	}
+	buttonSet2 = {
+		x = 225,
+		y1 = 195,
+		y2 = 285,
+		y3 = 375,
 		width = 350,
 		height = 60,
 	}
@@ -47,7 +61,6 @@ function love.load()
 end
 function love.update(dt)
 	pong.detectCrash()
-	pong.detectIfMenu()
 	if gameState == "2player" or gameState == "cpu" then
 		pong.detectCollisionBetweenBallandPlayer1()
 		pong.detectCollisionBetweenBallandPlayer2()
@@ -89,10 +102,10 @@ function love.draw()
 	end
 	if gameState == "menu" then
 		love.graphics.setColor(1, 1, 1)
-		love.graphics.rectangle("line", button.x, button.y1, button.width, button.height)
-		love.graphics.rectangle("line", button.x, button.y2, button.width, button.height)
-		love.graphics.printf("PLAY(p)", button.x, button.y1 + button.height / 2 - 6, button.width, "center")
-		love.graphics.printf("CONTROLS(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")
+		love.graphics.rectangle("line", buttonSet1.x, buttonSet1.y1, buttonSet1.width, buttonSet1.height)
+		love.graphics.rectangle("line", buttonSet1.x, buttonSet1.y2, buttonSet1.width, buttonSet1.height)
+		love.graphics.printf("PLAY(p)", buttonSet1.x, buttonSet1.y1 + buttonSet1.height / 2 - 6, buttonSet1.width, "center")
+		love.graphics.printf("CONTROLS(c)", buttonSet1.x, buttonSet1.y2 + buttonSet1.height / 2 - 6, buttonSet1.width, "center")
 	end
 	if gameState == "controlMenu" then
 		love.graphics.print("W/S to move the left paddle or to play when you're playing with", 5, 5)
@@ -103,9 +116,27 @@ function love.draw()
 	end
 	if gameState == "optionsMenu" then
 		love.graphics.setColor(1, 1, 1)
-		love.graphics.rectangle("line", button.x, button.y1, button.width, button.height)
-		love.graphics.rectangle("line", button.x, button.y2, button.width, button.height)
-		love.graphics.printf("2 PLAYER(p)", button.x, button.y1 + button.height / 2 - 6, button.width, "center")
-		love.graphics.printf("CPU(c)", button.x, button.y2 + button.height / 2 - 6, button.width, "center")	
+		love.graphics.rectangle("line", buttonSet1.x, buttonSet1.y1, buttonSet1.width, buttonSet1.height)
+		love.graphics.rectangle("line", buttonSet1.x, buttonSet1.y2, buttonSet1.width, buttonSet1.height)
+		love.graphics.printf("2 PLAYER(p)", buttonSet1.x, buttonSet1.y1 + buttonSet1.height / 2 - 6, buttonSet1.width, "center")
+		love.graphics.printf("CPU(c)", buttonSet1.x, buttonSet1.y2 + buttonSet1.height / 2 - 6, buttonSet1.width, "center")	
+	end
+	if gameState == "2playerDifficultyMenu" then
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y1, buttonSet2.width, buttonSet2.height)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y2, buttonSet2.width, buttonSet2.height)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y3, buttonSet2.width, buttonSet2.height)
+		love.graphics.printf("EASY(e)", buttonSet2.x, buttonSet2.y1 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")
+		love.graphics.printf("MEDIUM(m)", buttonSet2.x, buttonSet2.y2 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")
+		love.graphics.printf("HARD(h)", buttonSet2.x, buttonSet2.y3 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")	
+	end
+	if gameState == "cpuDifficultyMenu" then
+		love.graphics.setColor(1, 1, 1)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y1, buttonSet2.width, buttonSet2.height)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y2, buttonSet2.width, buttonSet2.height)
+		love.graphics.rectangle("line", buttonSet2.x, buttonSet2.y3, buttonSet2.width, buttonSet2.height)
+		love.graphics.printf("EASY(e)", buttonSet2.x, buttonSet2.y1 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")
+		love.graphics.printf("MEDIUM(m)", buttonSet2.x, buttonSet2.y2 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")
+		love.graphics.printf("HARD(h)", buttonSet2.x, buttonSet2.y3 + buttonSet2.height / 2 - 6, buttonSet2.width, "center")	
 	end
 end

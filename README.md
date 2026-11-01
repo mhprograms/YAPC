@@ -30,6 +30,8 @@ MH Programs
 [@mhprograms](https://discord.com/users/mhprograms)
 
 ## Version History
+* 1.0
+	* feat: difficulties
 * 0.9.2
 	* fix: moved the last bit of the first sentence to a new line so you can read it.
 * 0.9.1
